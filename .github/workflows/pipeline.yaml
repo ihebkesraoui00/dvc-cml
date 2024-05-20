@@ -1,7 +1,6 @@
 name: Run code
 
 on: [push, pull_request]
-
 jobs:
   run_code:
     name: Run code
