@@ -6,20 +6,24 @@ jobs:
   run_code:
     name: Run code
     runs-on: ubuntu-latest
-    container: khuyentran1401/customer_segmentation:dvc
     steps:
       - name: Check out the current repository
-        id: checkout
         uses: actions/checkout@v2
 
-      - name: Check pip version and upgrade if needed
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Replace 'x' with the desired Python version
+
+      - name: Install and set up virtual environment
         run: |
-          /usr/local/bin/python -m pip --version
-          /usr/local/bin/python -m pip install --upgrade pip
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install dvc dvc[gdrive]
 
       - name: Pull data from DVC
         run: |
-          pip install dvc_gdrive
           dvc remote list
           dvc remote modify myremote gdrive_client_id ${{ secrets.DAGSHUB_USERNAME }}
           dvc remote modify myremote gdrive_client_secret ${{ secrets.DAGSHUB_TOKEN }}
