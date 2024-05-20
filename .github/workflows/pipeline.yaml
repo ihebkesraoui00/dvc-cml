@@ -12,11 +12,15 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
+      - name: Check pip version and upgrade if needed
+        run: |
+          /usr/local/bin/python -m pip --version
+          /usr/local/bin/python -m pip install --upgrade pip
+
       - name: Pull data from DVC
         run: |
-          pip install dvc-gdrive
+          pip install dvc_gdrive
           dvc remote list
           dvc remote modify myremote gdrive_client_id ${{ secrets.DAGSHUB_USERNAME }}
           dvc remote modify myremote gdrive_client_secret ${{ secrets.DAGSHUB_TOKEN }}
           dvc pull
-          
