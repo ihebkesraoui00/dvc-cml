@@ -14,6 +14,8 @@ jobs:
 
       - name: Pull data from DVC
         run: |
+          pip install dvc_gdrive
+
           dvc remote list
           dvc remote modify myremote gdrive_client_id ${{ secrets.DAGSHUB_USERNAME }}
           dvc remote modify myremote gdrive_client_secret ${{ secrets.DAGSHUB_TOKEN }}
