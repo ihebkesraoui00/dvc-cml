@@ -14,7 +14,8 @@ jobs:
 
       - name: Pull data from DVC
         run: |
-
-          dvc remote modify origin --local user ${{ secrets.DAGSHUB_USERNAME }}
-          dvc remote modify origin --local password ${{ secrets.DAGSHUB_TOKEN }}
+          dvc remote list
+          dvc remote modify myremote gdrive_client_id ${{ secrets.DAGSHUB_USERNAME }}
+          dvc remote modify myremote gdrive_client_secret ${{ secrets.DAGSHUB_TOKEN }}
           dvc pull
+          
