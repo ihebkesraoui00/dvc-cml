@@ -27,7 +27,7 @@ jobs:
         run: |
           dvc remote modify --local myremote profile myprofile
           dvc remote modify --local myremote \
-          gdrive_service_account_json_file_path $CACHE_HOME/pydrive2fs/${{ secrets.DAGSHUB_USERNAME }}/default.json
+          gdrive_service_account_json_file_path ~/.cache/pydrive2fs/${{ secrets.DAGSHUB_USERNAME }}/default.json
           dvc remote modify myremote gdrive_trash_only true
           dvc remote modify myremote gdrive_acknowledge_abuse true
           dvc remote modify myremote gdrive_use_service_account true
