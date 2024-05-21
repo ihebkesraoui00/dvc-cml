@@ -20,6 +20,8 @@ jobs:
 
       - name: Pull data from DVC
         run: |
+          dvc remote modify myremote \
+          gdrive_user_credentials_file /home/nanoz-admin/runner/.cache/pydrive2fs/${{ secrets.DAGSHUB_USERNAME }}/default.json
           dvc remote modify myremote gdrive_acknowledge_abuse true
           dvc remote list
           dvc remote modify myremote gdrive_service_account_user_email \
