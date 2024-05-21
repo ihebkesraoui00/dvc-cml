@@ -1,22 +1,20 @@
-name: CML & DVC
+name: model-training
 on: [push]
 jobs:
-  train-and-report:
+  run:
     runs-on: ubuntu-latest
+    container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - uses: iterative/setup-cml@v1
-      - uses: iterative/setup-dvc@v1
       - name: Train model
         env:
          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
-          dvc pull data
+          # Install requirements
+          pip install -r requirements.txt
+
+          # Pull data & run-cache from S3 and reproduce pipeline
+          dvc pull data --run-cache
           dvc remote modify --local myremote \
           gdrive_service_account_json_file_path \
           /home/nanoz-admin/runner/.cache/pydrive2fs/${{ secrets.DAGSHUB_USERNAME }}/default.json
