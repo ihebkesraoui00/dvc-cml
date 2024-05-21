@@ -20,6 +20,7 @@ jobs:
 
       - name: Pull data from DVC
         run: |
+          dvc remote modify myremote gdrive_acknowledge_abuse true
           dvc remote list
           dvc remote modify myremote gdrive_service_account_user_email \
               ihebkesraoui@gmail.com
