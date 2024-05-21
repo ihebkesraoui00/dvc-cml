@@ -29,12 +29,13 @@ jobs:
          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
           echo "$GDRIVE_CREDENTIALS_DATA" > gdrive_creds.json
-          
           dvc remote modify myremote gdrive_use_service_account true
-          dvc remote modify myremote --local gdrive_service_account_json_file_path gdrive_creds.json          
+
+          dvc remote modify myremote --local \
+              gdrive_service_account_json_file_path gdrive_creds.json     
+          dvc remote modify myremote gdrive_use_service_account true
           dvc remote modify --local myremote profile myprofile
-          dvc remote modify myremote gdrive_trash_only true
-          dvc remote modify myremote gdrive_acknowledge_abuse true
+         
           dvc remote list
           dvc remote modify myremote gdrive_service_account_user_email \
               ihebkesraoui@gmail.com
